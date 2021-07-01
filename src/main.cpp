@@ -1,4 +1,10 @@
-int main(int argc, char *argv[])
+#include <iostream>
+#include "Arquive.hpp"
+
+using namespace std;
+
+int main()
 {
+    
     return 0;
 }
