@@ -11,7 +11,7 @@ using set_of_numbers_type = std::vector< number_type >;
 class KenoBet {
     public:
         //! Creates an empty KenoBet.
-        KenoBet( ) : m_wage(0)
+        KenoBet () : m_wage(0)
         { /* empty */};
 
         /*! Adds a number to the spots only if the number is not already there.
