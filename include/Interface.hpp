@@ -5,11 +5,14 @@
 
 class Interface {
     public:
-        /*! Resets the console.*/
+        /*! Resets the console. */
         void reset(void);
 
         /*! Reads the file with bet and wage. */
-        void read_file(void);
+        void start(int argc, char *argv[]);
+
+        /*! Shows the initial informations. */
+        void show_initial(void);
 };
 
 #endif
