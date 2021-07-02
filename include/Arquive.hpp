@@ -1,19 +1,30 @@
 #ifndef Arquive_hpp
 #define Arquive_hpp
 
+#include "KenoBet.hpp"
+
 #include <iostream>
 #include <vector>
 #include <string>
 
-
 class Arquive {
-    private:
-        std::string local;
     public:
-        Arquive(std::string local_);
-        void write_ln(std::string texto);
-        std::vector<std::string> read_lines(int n);
-    
+        /*! */
+        void set_local(std::string local_);
+
+        /*! */
+        std::string get_local(void);
+
+    private:
+        /*! */
+        std::string local;
 };
+
+
+/*! */
+bool read_lines(Arquive &file_bet, KenoBet &player);
+
+/*! */
+void set_infos(std::vector<std::string> & lines, KenoBet &player);
 
 #endif

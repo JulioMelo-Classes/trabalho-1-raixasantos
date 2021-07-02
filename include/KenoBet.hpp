@@ -10,6 +10,12 @@ using set_of_numbers_type = std::vector< number_type >;
 
 class KenoBet {
     public:
+        //! Number of rounds.
+        number_type NR;
+
+        //! Initial credit.
+        cash_type IC;
+
         //! Creates an empty KenoBet.
         KenoBet () : m_wage(0)
         { /* empty */};
@@ -17,7 +23,7 @@ class KenoBet {
         /*! Adds a number to the spots only if the number is not already there.
             @param spot_ The number we wish to include in the bet.
             @return T If number chosen is successfully inserted; F Otherwise. */
-        bool add_number(number_type spot_);
+        bool add_number(set_of_numbers_type & v_spot_);
 
         /*! Sets the amount of money the player is betting.
             @param wage_ The wage.
@@ -42,7 +48,7 @@ class KenoBet {
 
         /*! Returns a vector<spot_type> with the spots the player has picked so far.
             @return The vector<spot_type> with the player's spots picked so far. */
-        set_of_numbers_type get_spots(void) const;
+        set_of_numbers_type get_spots(void);
 
     private:
         set_of_numbers_type m_spots; //<! The player's bet.
