@@ -65,11 +65,16 @@ void set_infos(std::vector<std::string> & lines, KenoBet &player)
     while(!ss_spots.eof())
     { 
         ss_spots >> spot_;
+        for(auto r=v_spot_.begin();
+        r!=v_spot_.end(); r++){
+            if(*r==spot_){
+                //std::cout<<"Valor Repetido: "<<*r<<std::endl;
+            }
+        }
         v_spot_.push_back(spot_);   
     }      
 
     // Ordenar o v_spot_
-
     player.add_number(v_spot_);  
 }
 
