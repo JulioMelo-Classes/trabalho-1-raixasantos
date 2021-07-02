@@ -46,11 +46,19 @@ bool read_lines(Arquive &file_bet, KenoBet &player){
 void set_infos(std::vector<std::string> & lines, KenoBet &player)
 {
     std::stringstream ss_wage, ss_nr, ss_spots;
+    std::string s_test;
 
     ss_wage << lines[0];
     cash_type wage_;
     ss_wage >> wage_;
     player.set_wage(wage_);
+
+    //Pegar o valor e passar para tipo string para verificar se há " "
+    //s_test = ss_wage.str();
+    //if(s_test.find_first_of(" ")){
+    //    std::cout<<"Error Message: linha 1"<<std::endl;
+    //}
+    
 
     ss_nr << lines[1];
     int NR;
@@ -68,7 +76,7 @@ void set_infos(std::vector<std::string> & lines, KenoBet &player)
         for(auto r=v_spot_.begin();
         r!=v_spot_.end(); r++){
             if(*r==spot_){
-                //std::cout<<"Valor Repetido: "<<*r<<std::endl;
+                std::cout<<"Error Messeger: Número Repetido "<<std::endl;
             }
         }
         v_spot_.push_back(spot_);   
