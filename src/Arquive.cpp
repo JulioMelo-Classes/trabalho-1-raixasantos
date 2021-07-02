@@ -47,14 +47,25 @@ void set_infos(std::vector<std::string> & lines, KenoBet &player)
 {
     std::stringstream ss_wage, ss_nr, ss_spots;
     std::string s_test;
+    std::size_t procurar;
+    std::vector<char> verify_elements = {'0', '1', '2', '3', '4', '5', '6', 
+                            '7', '8', '9', '.', ' '};
 
     ss_wage << lines[0];
     cash_type wage_;
     ss_wage >> wage_;
     player.set_wage(wage_);
+    s_test = ss_wage.str();
+
+    //Verificar a presença de caracteres estranhos
+    procurar =s_test.find_first_not_of("0123456789. ");
+    //Está encontrando o 0 como estranho
+    if(procurar != std::string::npos){
+        std::cout<<"Error Message: linha 1 Caractere estranho:"<<procurar<<std::endl;
+    }
+
 
     //Pegar o valor e passar para tipo string para verificar se há " "
-    s_test = ss_wage.str();
     if(s_test.find(" ") != std::string::npos){
         std::cout<<"Error Message: linha 1"<<std::endl;
     }
@@ -64,6 +75,10 @@ void set_infos(std::vector<std::string> & lines, KenoBet &player)
     int NR;
     ss_nr >> NR;
     player.NR = NR;
+    s_test = ss_nr.str();
+    if(s_test.find(" ") != std::string::npos){
+        std::cout<<"Error Message: linha 2"<<std::endl;
+    }
 
     player.IC = player.get_wage()/(cash_type) player.NR;
 
