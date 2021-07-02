@@ -3,9 +3,9 @@
 /*! Adds a number to the spots only if the number is not already there.
     @param spot_ The number we wish to include in the bet.
     @return T If number chosen is successfully inserted; F Otherwise. */
-bool KenoBet::add_number(number_type spot_)
+bool KenoBet::add_number(set_of_numbers_type & v_spot_)
 {
-    m_spots.push_back(spot_);
+    m_spots.assign(v_spot_.begin(), v_spot_.end());
     return true;
 }
 
@@ -15,13 +15,15 @@ bool KenoBet::add_number(number_type spot_)
 bool KenoBet::set_wage(cash_type wage_)
 {
     m_wage = wage_;
-    return true;
+    return true; // conditions
 }
 
 /*! Resets a bet to an empty state. */
 void KenoBet::reset(void)
 {
-    // m_wage, m_spots
+    m_wage = 0;
+    m_spots.clear();
+    m_spots.resize(0);
 }
 
 /*! Retrieves the player's wage on this bet.
@@ -50,7 +52,7 @@ set_of_numbers_type KenoBet::get_hits(const set_of_numbers_type & hits_) const
 
 /*! Returns a vector<spot_type> with the spots the player has picked so far.
     @return The vector<spot_type> with the player's spots picked so far. */
-set_of_numbers_type KenoBet::get_spots(void) const
+set_of_numbers_type KenoBet::get_spots(void)
 {
     return m_spots;
 }
