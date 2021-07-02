@@ -54,10 +54,10 @@ void set_infos(std::vector<std::string> & lines, KenoBet &player)
     player.set_wage(wage_);
 
     //Pegar o valor e passar para tipo string para verificar se há " "
-    //s_test = ss_wage.str();
-    //if(s_test.find_first_of(" ")){
-    //    std::cout<<"Error Message: linha 1"<<std::endl;
-    //}
+    s_test = ss_wage.str();
+    if(s_test.find(" ") != std::string::npos){
+        std::cout<<"Error Message: linha 1"<<std::endl;
+    }
     
 
     ss_nr << lines[1];
