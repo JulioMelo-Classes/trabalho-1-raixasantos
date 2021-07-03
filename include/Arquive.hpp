@@ -24,7 +24,18 @@ class Arquive {
 /*! */
 bool read_lines(Arquive &file_bet, KenoBet &player);
 
+/*! Verificar a presença de caracteres estranhos.
+* @param line Texto a ser verificado.
+* @return Verdadeiro, se houver caracteres estranhos. Caso contrário, retorna falso.
+*/
+bool others_symbols(std::string s_test);
+
+/*! Verificar se há " ".
+* @param line
+*/
+bool space_between(std::string line);
+
 /*! */
-void set_infos(std::vector<std::string> & lines, KenoBet &player);
+bool set_infos(std::vector<std::string> & lines, KenoBet &player);
 
 #endif
