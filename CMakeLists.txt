@@ -8,4 +8,5 @@ add_executable(keno src/main.cpp
                     src/Interface.cpp
                     src/Arquive.cpp
                     src/KenoBet.cpp
+                    src/Operations.cpp
                     )
