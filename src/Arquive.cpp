@@ -106,6 +106,8 @@ bool set_infos(std::vector<std::string> & lines, KenoBet &player)
     ss_nr << lines[1];
     ss_nr >> NR;
     player.set_NR(NR);
+    if(player.get_IC()/(cash_type) player.get_NR() <= 0)
+        return false; // valor de crédito por rodada inválido
     player.set_wage(player.get_IC()/(cash_type) player.get_NR());
 
     // ------------- Números --------------------    

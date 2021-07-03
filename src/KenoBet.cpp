@@ -55,12 +55,33 @@ number_type KenoBet::get_NR(void) const
     return NR;
 }
 
+bool KenoBet::set_current_credits(cash_type credits)
+{
+    current_credits += credits;
+    return true; // conditions
+}
+
+cash_type KenoBet::get_current_credits(void) const
+{
+    return current_credits;
+}
+
 /*! Determine how many spots match the hits passed as argument.
     @param hits_ List of hits randomly chosen by the computer.
     @return An vector with the list of hits. */
 set_of_numbers_type KenoBet::get_hits(const set_of_numbers_type & hits_) const
 {
     std::vector<number_type> g_hits;
+
+    for(auto i : hits_)
+    {
+        for(auto j : m_spots)
+        {
+            if(i == j){
+                g_hits.push_back(i);
+            }
+        }
+    }
 
     return g_hits;
 }
@@ -75,7 +96,10 @@ set_of_numbers_type KenoBet::get_spots(void)
 /*! Resets a bet to an empty state. */
 void KenoBet::reset(void)
 {
-    m_wage = 0;
     m_spots.clear();
     m_spots.resize(0);
+    NR = 0;
+    m_wage = 0;
+    IC = 0;
+    current_credits = 0;
 }
