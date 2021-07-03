@@ -6,7 +6,6 @@
 #include <iostream>
 #include <vector>
 
-
-
+void sort_spots(set_of_numbers_type & v_spot);
 
 #endif
