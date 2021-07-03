@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <string> 
 
 /*! */
 void Arquive::set_local(std::string local_)
@@ -18,91 +19,136 @@ std::string Arquive::get_local(void)
 
 /*! */
 bool read_lines(Arquive &file_bet, KenoBet &player){
-    std::ifstream file1;
+    std::ifstream file;
     std::vector<std::string> lines;
 
-    file1.open(file_bet.get_local());
+    file.open(file_bet.get_local());
 
-    if(file1.is_open())
-    {   
-        while(!file1.eof()){
+    if(file.peek() == std::ifstream::traits_type::eof())
+    {
+        std::cout << "Arquivo vazio!\n"; // error message
+        return false;
+    }
+    else
+    {
+        while(!file.eof())
+        {
             std::string texto;
-            getline(file1, texto);
+            getline(file, texto);
             lines.push_back(texto);
         }
     }
 
-    if(lines.empty())
-        std::cout << "Arquivo vazio! Tente novamente: \n"; // error message
+    if(!set_infos(lines, player)) // caso tiver algo errado com as infos
+        return false;
 
-    file1.close();
+    file.close();
 
-    set_infos(lines, player);
+    return true;
+}
 
-    return true; // conditions
+/*! Verificar a presença de caracteres estranhos.
+    @param line Texto a ser verificado.
+    @return Verdadeiro, se houver caracteres estranhos. Caso contrário, retorna falso.
+*/
+bool others_symbols(std::string line)
+{
+    std::size_t procurar;
+
+    procurar = line.find_first_not_of("0123456789. ");
+    if(procurar != std::string::npos)
+    {
+        std::cout << "Error Message: linha 1 Caractere estranho: " 
+                << line[procurar] << std::endl;
+        return true;
+    }
+
+    return false;
+}
+
+/*! Verificar se há " ".
+* @param line
+*/
+bool space_between(std::string line)
+{
+    if(line.find(" ") != std::string::npos)
+    {
+        std::cout << "Error Message: espaço indevido" << std::endl;
+        return true;
+    }
+    return false;
 }
 
 /*! */
-void set_infos(std::vector<std::string> & lines, KenoBet &player)
+bool set_infos(std::vector<std::string> & lines, KenoBet &player)
 {
-    std::stringstream ss_wage, ss_nr, ss_spots;
-    std::string s_test;
-    std::size_t procurar;
-    std::vector<char> verify_elements = {'0', '1', '2', '3', '4', '5', '6', 
-                            '7', '8', '9', '.', ' '};
-
-    ss_wage << lines[0];
-    cash_type wage_;
-    ss_wage >> wage_;
-    player.set_wage(wage_);
-    s_test = ss_wage.str();
-
-    //Verificar a presença de caracteres estranhos
-    procurar =s_test.find_first_not_of("0123456789. ");
-    //Está encontrando o 0 como estranho
-    if(procurar != std::string::npos){
-        std::cout<<"Error Message: linha 1 Caractere estranho:"<<procurar<<std::endl;
+    for(int i = 0; i < lines.size(); i++)
+    {
+        if(others_symbols(lines[i]))
+            return false;
+        if(i != 2 && space_between(lines[i]))
+            return false;
     }
 
-
-    //Pegar o valor e passar para tipo string para verificar se há " "
-    if(s_test.find(" ") != std::string::npos){
-        std::cout<<"Error Message: linha 1"<<std::endl;
-    }
-    
-
-    ss_nr << lines[1];
+    std::stringstream ss_ic, ss_nr, ss_spots;
+    cash_type IC_;
     int NR;
-    ss_nr >> NR;
-    player.NR = NR;
-    s_test = ss_nr.str();
-    if(s_test.find(" ") != std::string::npos){
-        std::cout<<"Error Message: linha 2"<<std::endl;
-    }
-
-    player.IC = player.get_wage()/(cash_type) player.NR;
-
-    ss_spots << lines[2];
     number_type spot_;
     set_of_numbers_type v_spot_;
+
+    // ------------- Créditos --------------------
+    ss_ic << lines[0];
+    ss_ic >> IC_;
+    player.set_IC(IC_);
+
+    // ------------- Nº de rodadas --------------------    
+    ss_nr << lines[1];
+    ss_nr >> NR;
+    player.set_NR(NR);
+    player.set_wage(player.get_IC()/(cash_type) player.get_NR());
+
+    // ------------- Números --------------------    
+    ss_spots << lines[2];
     while(!ss_spots.eof())
     { 
         ss_spots >> spot_;
-        for(auto r=v_spot_.begin();
-        r!=v_spot_.end(); r++){
-            if(*r==spot_){
-                std::cout<<"Error Messeger: Número Repetido "<<std::endl;
+        for(auto r = v_spot_.begin(); r != v_spot_.end(); r++)
+        {
+            if(*r == spot_)
+            {
+                std::cout << "Error Messeger: Número Repetido " << std::endl;
+                return false;
             }
         }
         v_spot_.push_back(spot_);   
     }      
 
-    // Ordenar o v_spot_
+    if(v_spot_.size() <= 0 || v_spot_.size() > 15)
+    {
+        std::cout << "Error Messeger: > 15 " << std::endl;
+        return false;
+    }
+
+    // Ordenar o v_spot_.
+    int j;
+    number_type key;
+    for (int i = 1; i < v_spot_.size(); i++)
+    {
+        key = v_spot_[i];
+        j = i - 1;
+
+        /* Move elements of arr[0..i-1], that are
+        greater than key, to one position ahead
+        of their current position */
+        while (j >= 0 && v_spot_[j] > key)
+        {
+            v_spot_[j + 1] = v_spot_[j];
+            j = j - 1;
+        }
+        v_spot_[j + 1] = key;
+    }
+
     player.add_number(v_spot_);  
+
+    return true;
 }
-
-/*
-    std::vector<char> verify_elements = {'0', '1', '2', '3', '4', '5', '6', 
-                            '7', '8', '9', '.', ' '};  
-
-*/

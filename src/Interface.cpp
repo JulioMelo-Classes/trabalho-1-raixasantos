@@ -6,13 +6,17 @@
 #include <string>
 #include <iomanip>
 
-/*! Resets the console.*/
+/*! Resets the console.
+    @return void 
+*/
 void reset(void)
 {
     system("clear");
 }
 
-/*! Reads the file with bet and wage. */
+/*! Reads the file with bet and wage. 
+    @param
+*/
 void Interface::start(KenoBet &player, Arquive &file_bet, int argc, char *argv[])
 {   
     std::string local_ = argv[1];
@@ -31,24 +35,39 @@ void Interface::start(KenoBet &player, Arquive &file_bet, int argc, char *argv[]
         show_initial(player);
     else
     {   
-        reset();
-        std::cout << "Aposta inválida! Tente novamente: " << std::endl;
+        //reset();
+        std::cout << "Aposta inválida! Tente novamente: " << std::endl; // receber qual a error message
     }
 }
 
 /*! Shows the initial informations. */
 void Interface::show_initial(KenoBet &player)
 {
-    std::cout << ">>> Aposta lida com sucesso!\n    Você apostará um total de $" << player.get_wage() 
-            << " créditos.\n    Jogará um total de " << player.NR 
-            << " rodadas, apostando $" << std::setprecision(5) << player.IC 
+    std::cout << ">>> Aposta lida com sucesso!\n    Você apostará um total de $" << player.get_IC() 
+            << " créditos.\n    Jogará um total de " << player.get_NR() 
+            << " rodadas, apostando $" << std::setprecision(5) << player.get_wage()
             << " créditos por rodada.\n" << std::endl;
 
-    std::cout << "    Sua aposta tem " << player.size()
+    if(player.size() > 1){
+        std::cout << "    Sua aposta tem " << player.size()
             << " números, eles são: [ ";
+    }
+    else
+    {
+        std::cout << "    Sua aposta tem " << player.size()
+            << " número, ele é: [ ";
+    }
+    
     for(auto spot : player.get_spots())
     {
         std::cout << spot << " ";
     }
-    std::cout << "]\n" << std::endl;
+    std::cout << "]" << std::endl;
+
+    std::cout << "    -----------+-----------" << std::endl
+              << "    Hits       | Retorno" << std::endl;
+
+
+    std::cout << "------------------------------------------" <<
+                "----------------------------" << std::endl; 
 }
