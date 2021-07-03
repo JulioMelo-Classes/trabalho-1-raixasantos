@@ -1,6 +1,7 @@
 #include "Arquive.hpp"
 #include "KenoBet.hpp"
 #include "Interface.hpp"
+#include "Operations.hpp"
 
 int main(int argc, char *argv[]) {
     Interface interface;

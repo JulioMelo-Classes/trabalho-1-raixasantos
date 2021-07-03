@@ -1,5 +1,6 @@
 #include "Arquive.hpp"
 #include "KenoBet.hpp"
+#include "Operations.hpp"
 
 #include <fstream>
 #include <sstream>
@@ -129,25 +130,7 @@ bool set_infos(std::vector<std::string> & lines, KenoBet &player)
         return false;
     }
 
-    // Ordenar o v_spot_.
-    int j;
-    number_type key;
-    for (int i = 1; i < v_spot_.size(); i++)
-    {
-        key = v_spot_[i];
-        j = i - 1;
-
-        /* Move elements of arr[0..i-1], that are
-        greater than key, to one position ahead
-        of their current position */
-        while (j >= 0 && v_spot_[j] > key)
-        {
-            v_spot_[j + 1] = v_spot_[j];
-            j = j - 1;
-        }
-        v_spot_[j + 1] = key;
-    }
-
+    sort_spots(v_spot_);
     player.add_number(v_spot_);  
 
     return true;
