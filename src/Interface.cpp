@@ -70,4 +70,11 @@ void Interface::show_initial(KenoBet &player)
 
     std::cout << "------------------------------------------" <<
                 "----------------------------" << std::endl; 
+    /*std::cout<<"Teste da Matriz"<<std::endl;
+    for(int i=1;i<=15;i++){
+        for(int j=0;j<16;j++){
+            std::cout<<"|"<<player.payoff_table[i-1][j];
+        }
+        std::cout<<std::endl;
+    }*/
 }
