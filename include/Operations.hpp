@@ -8,4 +8,6 @@
 
 void sort_spots(set_of_numbers_type & v_spot);
 
+set_of_numbers_type v_numbers_random(void);
+
 #endif

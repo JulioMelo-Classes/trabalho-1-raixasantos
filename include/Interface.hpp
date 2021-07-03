@@ -9,10 +9,16 @@
 class Interface {
     public:
         /*! Reads the file with bet and wage. */
-        void start(KenoBet &player, Arquive &file_bet, int argc, char *argv[]);
+        bool start(KenoBet &player, Arquive &file_bet, int argc, char *argv[]);
 
         /*! Shows the initial informations. */
         void show_initial(KenoBet &player);
+
+        /*! Shows rounds informations. */
+        void show_game(KenoBet &player, int current_round);
+
+        /*! Shows final informations. */
+        void show_summary(KenoBet &player);
 };
 
 

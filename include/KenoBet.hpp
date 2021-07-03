@@ -19,6 +19,7 @@ class KenoBet {
             @return Number of spots present in the bet. */
         size_t size(void) const;
 
+
         /*! Adds a number to the spots only if the number is not already there.
             @param spot_ The number we wish to include in the bet.
             @return T If number chosen is successfully inserted; F Otherwise. */
@@ -42,6 +43,10 @@ class KenoBet {
 
         number_type get_NR(void) const;
 
+        bool set_current_credits(cash_type credits);
+
+        cash_type get_current_credits(void) const;
+
         /*! Determine how many spots match the hits passed as argument.
             @param hits_ List of hits randomly chosen by the computer.
             @return An vector with the list of hits. */
@@ -55,7 +60,7 @@ class KenoBet {
         void reset(void);
 
         //Matriz dos retornos
-        float payoff_table[15][16]={{0,3},
+        cash_type payoff_table[15][16]={{0,3},
                                     {0,1,9},
                                     {0,1,2,16},
                                     {0,0.5,2,6,12},
@@ -72,10 +77,11 @@ class KenoBet {
                                     {0,0,0,0.5,0.5,1,2,5,15,50,150,300,600,1200,2500,10000}};
 
     private:
-        set_of_numbers_type m_spots; //<! The player's bet.
+        set_of_numbers_type m_spots; //<! The player's bet.       
+        number_type NR; //<! Number of rounds. 
         cash_type m_wage; //<! The player's wage.        
-        number_type NR; //<! Number of rounds.        
         cash_type IC; //<! Initial credit.
+        cash_type current_credits; //<! Current credit.
         
 
 
