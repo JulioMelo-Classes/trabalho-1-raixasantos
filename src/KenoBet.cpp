@@ -52,7 +52,7 @@ bool KenoBet::set_IC(cash_type IC_)
     return true; // conditions
 }
 /*! Get's the player's initial credit.
-    @return The initial credit. */]
+    @return The initial credit. */
 /*! Determina o valor inicial do crédito do jogador .
     @return O crédito inicial. */
 cash_type KenoBet::get_IC(void) const

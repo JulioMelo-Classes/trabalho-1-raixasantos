@@ -9,19 +9,20 @@
 
 class Arquive {
     public:
-        /*! */
+        /*! Determina o local do arquivo
+            std::string local_ string que possui o endereço do arquivo*/
         void set_local(std::string local_);
 
-        /*! */
+        /*! Pega o local do arquivo*/
         std::string get_local(void);
 
     private:
-        /*! */
+        /*! String que guarda o local do arquivo*/
         std::string local;
 };
 
 
-/*! */
+/*! Leitura do Arquivo e atribuição dos valores da aposta*/
 bool read_lines(Arquive &file_bet, KenoBet &player);
 
 /*! Verificar a presença de caracteres estranhos.
