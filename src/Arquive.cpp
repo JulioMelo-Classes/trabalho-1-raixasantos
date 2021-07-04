@@ -6,19 +6,24 @@
 #include <sstream>
 #include <string> 
 
-/*! */
+/*! Set's the file local*/
+/*! Determina o local do arquivo de apostas */
 void Arquive::set_local(std::string local_)
 {
     local = local_;
 }
 
-/*! */
+/*! Get's the file local*/
+/*! Entrega o local do arquivo de apostas */
 std::string Arquive::get_local(void)
 {
     return local;
 }
 
-/*! */
+/*! Read the arquive and determine if is valid
+    @return T if is valid F otherwise*/
+/*! Ler o arquivo e determina se ele é válido ou não 
+    @return T se for válido F se não*/
 bool read_lines(Arquive &file_bet, KenoBet &player){
     std::ifstream file;
     std::vector<std::string> lines;
@@ -80,7 +85,7 @@ bool space_between(std::string line)
     return false;
 }
 
-/*! */
+/*! Coleta as informações da aposta de dentro do arquivo*/
 bool set_infos(std::vector<std::string> & lines, KenoBet &player)
 {
     for(int i = 0; i < lines.size(); i++)
