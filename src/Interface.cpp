@@ -3,32 +3,24 @@
 #include "KenoBet.hpp"
 #include "Operations.hpp"
 
-#include <iostream>
-#include <string>
-#include <iomanip>
-
-/*! Resets the console.
-    @return void 
-*/
-void reset(void)
-{
-    system("clear");
-}
-
-/*! Reads the file with bet and wage. 
-    @param
-*/
+// Reads the file with bet and other information.
 bool Interface::start(KenoBet &player, Arquive &file_bet, int argc, char *argv[])
 {   
-    std::string local_ = argv[1];
-
-    if(local_.find(".dat") != std::string::npos)
-        file_bet.set_local(local_);
+    if(argc == 1)
+    {
+        file_bet.set_local("../data/bet_1.dat");
+        std::cout << ">>> Lendo arquivo padrão de apostas, por favor aguarde..." << std::endl;   
+    }
     else
-        file_bet.set_local("data/bet_1.dat"); // error message
+    {
+        std::string local_ = argv[1];
+        
+        if(local_.find(".dat") != std::string::npos)
+            file_bet.set_local(local_);
 
-    std::cout << ">>> Lendo arquivo de apostas [" << file_bet.get_local() << 
-                "], por favor aguarde..." << std::endl;   
+        std::cout << ">>> Lendo arquivo de apostas [" << file_bet.get_local() << 
+                    "], por favor aguarde..." << std::endl;   
+    }
 
     if(read_lines(file_bet, player))
     {
@@ -37,13 +29,12 @@ bool Interface::start(KenoBet &player, Arquive &file_bet, int argc, char *argv[]
     }
     else
     {   
-        reset();
-        std::cout << "Aposta inválida! Tente novamente: " << std::endl; // receber qual a error message
+        std::cout << "    Aposta inválida! Tente novamente: " << std::endl; // receber qual a error message
         return false;
     }
 }
 
-/*! Shows the initial informations. */
+// Shows the initial information.
 void Interface::show_initial(KenoBet &player)
 {   
     std::cout << "------------------------------------------" <<
@@ -53,7 +44,8 @@ void Interface::show_initial(KenoBet &player)
             << " rodadas, apostando $" << std::setprecision(5) << player.get_wage()
             << " créditos por rodada.\n" << std::endl;
 
-    if(player.size() > 1){
+    if(player.size() > 1)
+    {
         std::cout << "    Sua aposta tem " << player.size()
             << " números, eles são: [ ";
     }
@@ -72,25 +64,19 @@ void Interface::show_initial(KenoBet &player)
     std::cout << "    -----------+-----------" << std::endl
               << "    Hits       | Retorno" << std::endl;
 
-    for(int j = 0; j < player.size()+1; j++){
+    for(int j = 0; j < player.size()+1; j++)
+    {
             std::cout << "    " << j << "          | " << player.payoff_table[player.size()-1][j] << std::endl;
     }
 }
 
-
-/*
-    player.IC -> crédito inicial (valor que coloca no inicio)
-
-    player.wage -> valor por rodada
-
-    player.current_credits -> valor ao longo das partidas
-*/
-
-/*! Shows rounds informations. */
+// Shows rounds information.
 void Interface::show_game(KenoBet &player, int current_round)
 {
     if(current_round == 1)
+    {
         player.set_current_credits(player.get_IC());
+    }
 
     std::cout << "------------------------------------------" <<
                 "----------------------------" << std::endl;
@@ -132,9 +118,10 @@ void Interface::show_game(KenoBet &player, int current_round)
     {
         std::cout<<">>>> Fim de rodadas" << std::endl;        
     }
+
 }
 
-/*! Shows final informations. */
+// Shows final information. 
 void Interface::show_summary(KenoBet &player)
 {
     std::cout << "------------------------------------------" <<

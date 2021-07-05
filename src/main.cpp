@@ -11,9 +11,9 @@ int main(int argc, char *argv[]) {
     if(interface.start(player, file_bet, argc, argv))    
     {
         number_type rounds = player.get_NR();
-        for(int i = 0; i < rounds; i++)
+        for(int i = 1; i < rounds+1; i++)
         {
-            interface.show_game(player, i+1);
+            interface.show_game(player, i);
         }
 
         interface.show_summary(player);
